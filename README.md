@@ -12,7 +12,6 @@ This chart will create a load test environment using [Locust](http://locust.io/)
 ### 2. create GKE cluster
 
 ```sh
-# You need google-cloud-service-key.json
 rake cluster:create
 ```
 

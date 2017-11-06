@@ -1,3 +1,6 @@
+@release_name = "locust"
+@release_namespace = "locust-gke-test"
+
 namespace :cluster do
   task :create do
     sh %Q(
@@ -20,21 +23,20 @@ end
 
 namespace :helm do
   task :install do
-    raise "you must set environment variables DOCKER_IMAGE" unless docker_image 
+    abort "you must set environment variables DOCKER_IMAGE" unless docker_image 
     sh %Q(gcloud container clusters get-credentials #{cluster_name})
     sh %Q(kubectl version && helm init)
     sh %Q(
-      helm install ./charts --namespace locust-gke-test --name locust-gke-test \
+      helm install ./charts --namespace #{@release_namespace} --name #{@release_name} \
         --set image="#{docker_image}" \
         --set slave_count=#{slave_count}
           )
   end
   
   task :delete do
-    sh %Q(helm delete locust --purge)
+    sh %Q(helm delete #{@release_name} --purge)
   end
 end
-
 
 def cluster_name
   ENV['CLUSTER_NAME'] || 'locust-gke-test'
