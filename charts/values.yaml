@@ -1,0 +1,2 @@
+image: "<your locust task docker image>"
+slaveCount: 10

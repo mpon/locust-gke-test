@@ -1,0 +1,27 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: locust-master
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: locust-master
+    spec:
+      containers:
+      - name: master
+        image: {{ .Values.image }}
+        env:
+        - name: LOCUST_MODE
+          value: master
+        ports:
+        - name: web
+          protocol: TCP
+          containerPort: 8089
+        - name: bind-port1
+          protocol: TCP
+          containerPort: 5557
+        - name: bind-port2
+          protocol: TCP
+          containerPort: 5558

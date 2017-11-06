@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: locust-master
+spec:
+  ports:
+  - name: web
+    port: 80
+    targetPort: web
+    protocol: TCP
+  - name: bind-port1
+    port: 5557
+    targetPort: bind-port1
+    protocol: TCP
+  - name: bind-port2
+    port: 5558
+    targetPort: bind-port2
+    protocol: TCP
+  type: LoadBalancer
+  selector:
+    app: locust-master

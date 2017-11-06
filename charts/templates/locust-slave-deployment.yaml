@@ -1,0 +1,20 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: locust-slave
+spec:
+  replicas: {{ .Values.slaveCount }}
+  template:
+    metadata:
+      labels:
+        app: locust-slave
+    spec:
+      containers:
+      - name: slave
+        image: {{ .Values.image }}
+        env: 
+        - name: LOCUST_MODE
+          value: slave
+        - name: LOCUST_MASTER
+          value: locust-master.{{ .Release.Name }}
+        
